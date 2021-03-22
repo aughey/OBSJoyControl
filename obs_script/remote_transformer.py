@@ -95,14 +95,14 @@ def script_tick(seconds):
 		obs.obs_source_release(source)
 
 def script_description():
-	return "Controls a 3D Transform through a remote UDP message on port 5005"
+	return "Controls a 3D Transform through a remote UDP message"
 
 
 def script_update(settings):
 	global pansource
 	global sock
 
-	pansource         = obs.obs_data_get_string(settings, "pansource")
+	pansource = obs.obs_data_get_string(settings, "pansource")
 	UDP_IP = obs.obs_data_get_string(settings, 'ip')
 	UDP_PORT = obs.obs_data_get_int(settings,'port')
 	if sock is not None:

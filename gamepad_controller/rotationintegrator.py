@@ -11,7 +11,7 @@ class ValueFilter:
 
 class RotationIntegrator:
     # all fovs are full vertical angles
-    def __init__(self,start_fov = 30.0, lookDPS=90, zoom_dps = 20.0, look_exp = 2.0, minfov = 5, maxfov=90, start_rotation=[0,0,0]):
+    def __init__(self,start_fov = 30.0, lookDPS=90, zoom_dps = 20.0, look_exp = 2.0, minfov = 5, maxfov=90, start_rotation=[0,0,0], pan_limit=45, tilt_limit=45):
         self.lookDPS = [lookDPS,lookDPS]
         self.look_exp = look_exp
         self.stick_inputs = [0,0]
@@ -25,6 +25,9 @@ class RotationIntegrator:
         self.commanded_zoom_delta = 0.0
         self.minfov = minfov
         self.maxfov = maxfov
+
+        self.pan_limit = pan_limit
+        self.tilt_limit = tilt_limit
     
     def OnLook(self,xy):
         self.stick_inputs = xy
@@ -73,6 +76,8 @@ class RotationIntegrator:
         self.integrated_rotation[1] += delta_rotation[0]
         self.integrated_rotation[0] += delta_rotation[1]
 
+        self.integrated_rotation[1] = RotationIntegrator.Clamp(self.integrated_rotation[1],-self.pan_limit,self.pan_limit)
+        self.integrated_rotation[0] = RotationIntegrator.Clamp(self.integrated_rotation[0],-self.tilt_limit,self.tilt_limit)
 
         # Integrate zoom
         actualzoom_delta = self.zoom_filter.Filter(self.commanded_zoom_delta)

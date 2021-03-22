@@ -13,6 +13,8 @@ parser.add_argument('--remoteport', type=int, default=5005, help="Remote OBS por
 parser.add_argument('--horizontalfov', type=float, default=90, help="Full horizontal field of view (default 90)")
 parser.add_argument('--downangle', type=float, default=0, help="Angle camera is pointed down from level (default 0)")
 parser.add_argument("--max_zoom_ratio", type=float, default=3, help="Maximum zoom ratio.  2 will allow zoom of 2 times")
+parser.add_argument('--pan_limit', type=float, default=45,help="Limit of the pan motion (default 45 degrees) [symetric]")
+parser.add_argument('--tilt_limit', type=float, default=45,help="Limit of the tilt motion (default 45 degrees) [symetric]")
 
 args = parser.parse_args()
 
@@ -33,7 +35,7 @@ minfov = math.degrees(2.0 *
         math.tan(math.radians(vertical_fov/2)) / args.max_zoom_ratio
         ,1))
 
-rotation = RotationIntegrator(start_fov=vertical_fov, minfov=minfov, maxfov=vertical_fov, start_rotation=[down_angle,0,0])
+rotation = RotationIntegrator(pan_limit=args.pan_limit, tilt_limit=args.tilt_limit, start_fov=vertical_fov, minfov=minfov, maxfov=vertical_fov, start_rotation=[down_angle,0,0])
 
 def Tick(dt):
     [v,fov] = rotation.FixedUpdate(dt)
