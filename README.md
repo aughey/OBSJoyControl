@@ -43,12 +43,12 @@ for applying the filter to the scene and not the camera itself is so that I can 
 
 The next step is to add the remote transformer to Tools -> Scripts in OBS.  Open this window by going to Tools -> Scripts.  Make sure that the Python Settings tab is setup with your installation of Python version 3.6.
 
-![scripts](scripts.jpg)
+![scripts](scripts.JPG)
 
 In the Scripts tab, click the + button, navigate to where you've extracted this project, and choose 
 remote_transformer.py inside the obs_script directory.
 
-![scriptsTab](scripts_tab.jpg)
+![scriptsTab](scripts_tab.JPG)
 
 There are several options in this script.
 
